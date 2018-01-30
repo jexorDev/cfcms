@@ -1,5 +1,6 @@
 <cf_template>          
 
+<!---
 <cfif structKeyExists(url, 'keyword')>
   <cfset keyword="#url.keyword#" >
 
@@ -38,7 +39,7 @@
         </div>
       </div>      
     </cfoutput>
-
+--->
     <div class="row">
       <div class="col-3">
         <cfinclude template="../../includes/search.cfm" />
@@ -46,6 +47,21 @@
       <div class="col-9">
         <div id="results">
         </div>
+        <div class="row justify-content-md-center" id="progress-bar">
+          <div class="col-3 mt-9">
+            <div class="card card-body">
+              <h5>Loading...</h5>
+              <div class="progress">            
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+        <!---
         <cfif results.RecordCount EQ 0>
           <div class="row">
             <div class="col-12">
@@ -56,6 +72,7 @@
             </div>
           </div>
         <cfelse>
+  
           <cfoutput query="results">
             <div class="row mb-2">
               <div class="col-12">
@@ -70,27 +87,38 @@
               </div>
             </div>
           </cfoutput>
+       
         </cfif>
+    
       </div>
-  </cfif>
-</cfif>
    
-</cf_template>
+  </cfif>
 
+</cfif>
+--->   
 <script>
+  $(function(){
+    $('#progress-bar').hide();
+  });
+
   function submitFilterSearchForm() {
+    $('#results').html('');
+    $('#progress-bar').show();
+    var title = $('#title').val();
     
-    var keyword = $('#keyword').val();
-    
-    $.ajax({
+    setTimeout(function(){
+       $.ajax({
             type: "GET",
             url: "results.cfm",
-            data: {keyword: keyword},
+            data: {title: title},
             success: function(data) {              
-                $('#results').html(data);                
+                $('#results').html(data);  
+                $('#progress-bar').hide();              
              }
         });
-    }
+    }, 500);
+   
+  }
   
    
   function errorHandler(code, msg)
@@ -100,4 +128,7 @@
 
  
 </script>
+</cf_template>
+
+
  

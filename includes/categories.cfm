@@ -1,14 +1,13 @@
 <cfquery name="categories">
-	SELECT * FROM Category
+	SELECT 
+		Id,
+		Name
+	FROM 
+		Category
 </cfquery>
 
-<div class="card " style="width: 18rem;">
-  <div class="card-header text-white bg-success">
-    Categories
-  </div>
-  <ul class="list-group list-group-flush">
-  	<cfoutput query="categories">
-    	<li class="list-group-item">#categories.name#</li>
-    </cfoutput>
-  </ul>
-</div>
+<select class="form-control" id="category" name="category">
+	<cfoutput query="categories">
+		<option value="#Id#">#Name#</option>
+	</cfoutput>
+</select>
