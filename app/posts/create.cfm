@@ -1,20 +1,18 @@
 <cf_template>          
 
-
-
 <cfif structKeyExists(form, 'postCreateSubmit')>
   <cfquery>
     
     <cfset title=#form.title#>
-    
-    <cfset datePosted=#form.postdate#>
-    
+    <cfset authorId=#form.author#>
+    <cfset datePosted=#DateFormat(form.postdate, "yyyy-mm-dd")#>
+    <cfset categoryId=#form.category#>
     <cfset content=#form.content#>
 
     INSERT INTO Post
     (
       Title,
-      Author,
+      AuthorId,
       DatePosted,
       CategoryId,
       Content
@@ -22,9 +20,9 @@
     VALUES
     (
       <cfqueryPARAM value="#title#" CFSQLType='CF_SQL_VARCHAR'>,
-      1,
+      <cfqueryPARAM value="#authorId#" CFSQLType='CF_SQL_INT'>,
       <cfqueryPARAM value="#datePosted#" CFSQLType='CF_SQL_DATETIME'>,
-      1,
+      <cfqueryPARAM value="#categoryId#" CFSQLType='CF_SQL_INT'>,
       <cfqueryPARAM value="#content#" CFSQLType='CF_SQL_VARCHAR'>
     )
   </cfquery>
@@ -34,6 +32,20 @@
     </div>
   </div>
 </cfif>
+<cfquery name="categories">
+  SELECT
+    Id,
+    Name
+  FROM
+    Category
+</cfquery>
+<cfquery name="authors">
+  SELECT
+    Id,
+    Name
+  FROM
+    Author
+</cfquery>
 <div class="col-12">
   <h1>Create new post</h1>
   <form action="create.cfm" method="post">
@@ -45,24 +57,26 @@
           </div>
           <div class="form-group">
             <label for="title">Author</label>
-            <select class="form-control">
-              
+            <select class="form-control" id="author" name="author">
+              <cfoutput query="authors">
+                <option value="#Id#">#Name#</option>
+              </cfoutput>
             </select>
           </div>
           <div class="form-group">
             <label for="title">Category</label>
-            <select class="form-control">
-              
+            <select class="form-control" id="category" name="category">
+              <cfoutput query="categories">
+                <option value="#Id#">#Name#</option>
+              </cfoutput>
             </select>
           </div>
           <div class="form-group">
             <label for="title">Date</label>
             <input
                   type="text" class="form-control" id="postdate" name="postdate"></input>
-          </div>
-          
-      </div>
-      
+          </div>          
+      </div>      
       <div class="col-9">
         <div class="form-group">
           <label for="title">Content</label>
@@ -73,14 +87,9 @@
           <button class="btn btn-outline-secondary">Cancel</button>
         </div>
       </div>
-    </div>
-    
+    </div>    
   </form>
 </div>
-
-
-
-
    
 </cf_template>
 

@@ -44,8 +44,8 @@ crossorigin="anonymous"></script>
           </div>
         </li>
       </ul>
-      <form class="form-inline">        
-        <input type="text" class="form-control mr-2" />
+      <form class="form-inline" action="../search/index.cfm" method="get">        
+        <input type="text" class="form-control mr-2" id="keyword" name="keyword" />
         <input type="submit" class="btn btn-outline-light" value="Search"/>
       </form>
     </div>
@@ -53,8 +53,8 @@ crossorigin="anonymous"></script>
 
   
 
-  <div class="container-fluid">
-    <div class="row mt-2 mb-2">
+  <div class="container-fluid mt-2 mb-2">
+    
 
   <!---end of header--->
   <cfelse>
