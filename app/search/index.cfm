@@ -1,4 +1,9 @@
-<cf_template>          
+<cf_template>    
+<cfif structKeyExists(url, 'keyword')>
+  <cfset keyword="#url.keyword#">
+<cfelse>
+  <cfset keyword="">
+</cfif>
 
 <!---
 <cfif structKeyExists(url, 'keyword')>
@@ -40,6 +45,9 @@
       </div>      
     </cfoutput>
 --->
+    <cfoutput>
+      <input type="hidden" value="#keyword#" id="keyword-input">
+    </cfoutput>
     <div class="row">
       <div class="col-3">
         <cfinclude template="../../includes/search.cfm" />
@@ -99,18 +107,28 @@
 <script>
   $(function(){
     $('#progress-bar').hide();
+
+    var keyword = $('#keyword-input').val();
+    if (keyword) {      
+      submitFilterSearchForm(keyword);
+    }
+
   });
 
-  function submitFilterSearchForm() {
+  function submitFilterSearchForm(keyword) {
     $('#results').html('');
     $('#progress-bar').show();
     var title = $('#title').val();
+    var category = $('#category').val();
     
-    setTimeout(function(){
+    setTimeout(function() {
+      //add slight delay to make it appear that search is working hard
        $.ajax({
             type: "GET",
             url: "results.cfm",
-            data: {title: title},
+            data: {keyword: keyword,
+                  title: title,
+                  category: category},
             success: function(data) {              
                 $('#results').html(data);  
                 $('#progress-bar').hide();              

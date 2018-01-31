@@ -1,4 +1,18 @@
-<cfset title="#title#">
+<cfif isDefined("keyword")>
+  <cfset keyword="#keyword#">
+<cfelse>
+  <cfset keyword="">
+</cfif>
+<cfif isDefined("title")>
+  <cfset title="#title#">
+<cfelse>
+  <cfset title="">
+</cfif>
+<cfif isDefined("category")>
+  <cfset category="#category#">
+<cfelse>
+  <cfset category="">
+</cfif>
 
 
 <cfquery name="results">
@@ -19,7 +33,21 @@
   ON 
     Category.Id = Post.CategoryId
   WHERE
-    Post.Title LIKE '%#title#%'
+  (
+    ('#title#' = '' 
+     OR Post.Title LIKE '%#title#%')
+    AND
+    ('#keyword#' = '' 
+     OR Post.Title LIKE '%#keyword#%')
+  )
+  AND
+  (
+    ('#category#' = ''
+     OR Category.Id = '#category#')
+    AND
+    ('#keyword#' = ''
+     OR Category.Name LIKE '%#keyword#%')
+  )
 
 </cfquery>
 
@@ -41,7 +69,7 @@
           <div class="card-body">
             <h5 class="card-title">#Title# </h5><small><em>in</em> #Category#</small>
             <h6 class="card-subtitle mb-2 text-muted">#Author# | #DateFormat(DatePosted, 'mmm dd, yyyy')#</h6>
-            <p class="card-text">#Left(Content, 30)#</p>
+            <p class="card-text">#Left(Content, 120)#...</p>
             <button class="btn btn-outline-success">Read More</button>
           </div>
         </div>

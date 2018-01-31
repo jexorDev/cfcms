@@ -65,11 +65,7 @@
           </div>
           <div class="form-group">
             <label for="title">Category</label>
-            <select class="form-control" id="category" name="category">
-              <cfoutput query="categories">
-                <option value="#Id#">#Name#</option>
-              </cfoutput>
-            </select>
+            <cfinclude template="../../includes/categories.cfm" />
           </div>
           <div class="form-group">
             <label for="title">Date</label>

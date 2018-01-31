@@ -2,7 +2,7 @@
 <div class="card text-white bg-success mb-3">
   <div class="card-header">Filter</div>
   <div class="card-body">
-    <form name="filterSearchForm" id="filterSearchForm">
+    <form name="filterSearchForm" id="filterSearchForm" method="get">
     	<div class="form-group">
             <label>Title</label>
             <input type="text" class="form-control" id="title" name="title">    
