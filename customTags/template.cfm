@@ -40,7 +40,8 @@ crossorigin="anonymous"></script>
             <a class="dropdown-item" href="/CMS/app/posts/create.cfm">Create Post</a>
             <a class="dropdown-item" href="#">Manage Posts</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Manage Authors</a>
+            <a class="dropdown-item" href="/CMS/app/maintain/index.cfm?type=categories">Manage Categories</a>
+            <a class="dropdown-item" href="/CMS/app/maintain/index.cfm?type=authors">Manage Authors</a>
           </div>
         </li>
       </ul>
